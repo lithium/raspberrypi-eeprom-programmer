@@ -12,7 +12,7 @@ Two MCP23S18 SPI I/O expansion ports are used to shit data in and out of the EEP
 
 Schematic
 ---------
-
+```
   GPIO10 (MOSI) -> MCP-A/MCP-B pin 14 (SI)
   GPIO09 (MISO) -> MCP-A/MCP-B pin 15 (SO)
   GPIO11 (CLK)  -> MCP-A/MCP-B pin 13 (SCK)
@@ -25,7 +25,7 @@ Schematic
   MCP-B GPB0 -> EEPROM OE#
   MCP-B GPB1 -> EEPROM CE#
   MCP-B GPB2 -> EEPROM WE#
-
+```
 
 
 
