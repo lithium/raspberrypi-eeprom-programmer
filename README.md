@@ -25,6 +25,7 @@ Schematic
   MCP-B GPB0 -> EEPROM OE#
   MCP-B GPB1 -> EEPROM CE#
   MCP-B GPB2 -> EEPROM WE#
+  MCP-B GPB7 -> EEPROM A16
 ```
 
 
@@ -32,7 +33,9 @@ Schematic
 Tool Usage
 ----------
 
-```rpi-eeprom read <outout_filename> [address[:size]]```  
-```rpi-eeprom write <input_filename> [address[:size]]```  
-```rpi-eeprom chksum [address[:size]]```  
-```rpi-eeprom verify <input_filename> [address[:size]]```  
+```rasbpi-eeprom read <outout_filename> [address[:size]]```  
+```rasbpi-eeprom write <input_filename> [address[:size]]```  
+```rasbpi-eeprom chksum [address[:size]]```  
+```rasbpi-eeprom verify <input_filename> [address[:size]]```  
+
+
