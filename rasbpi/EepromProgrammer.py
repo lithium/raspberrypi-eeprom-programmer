@@ -17,8 +17,6 @@ class EepromProgrammer(object):
     # port D.6 -> OE#
     # port D.7 -> CE#
 
-
-
     # set up address pins and control lines as outputs
     self.io.setPortDirection(IOExpander32.PORT_A, 0)
     self.io.setPortDirection(IOExpander32.PORT_B, 0)
@@ -32,7 +30,7 @@ class EepromProgrammer(object):
     self.syncBits()
     self._write_address(0x5555, 0xAA)
     self._write_address(0x2AAA, 0x55)
-    self._write_address(0x5555, 0x80)
+    self._write_address(0x5555, 0xA0)
     for i in min(128, range(0, len(bytes))):
       self._write_address(pageAddress+i, bytes[i])
 
@@ -73,7 +71,7 @@ class EepromProgrammer(object):
 
     dvalue = (self.CE & 1)<<7 | (self.OE & 1)<<6 | (self.WE & 1)<<5 | ((self.ADDR & 0x10000)>>16)
     self.io.writePort(IOExpander32.PORT_D, dvalue)
-    
+
   def writeData(self, value):
     self.io.writePort(IOExpander32.PORT_C, value)    
 

@@ -3,5 +3,6 @@
 import rasbpi
 
 if __name__ == '__main__':
-  rasbpi.main()
+  cli = rasbpi.EepromCommandLine()
+  cli.main()
   
