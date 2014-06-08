@@ -36,7 +36,8 @@ class IOExpander32(object):
 
   def _read_register(self, device, address):
     self.spi.open(*device)
-    return self.spi.xfer2([IOExpander32.READ_OPCODE, address])
+    self.spi.xfer2([IOExpander32.READ_OPCODE, address])
+    return self.spi.readbytes(1)
 
 
   def setPortDirection(self, port, value):

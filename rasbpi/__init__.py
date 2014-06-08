@@ -37,6 +37,12 @@ class EepromCommandLine(object):
 
     return func(*sys.argv[2:])
 
+  def write(self, filename, address=0, size=1):
+    self.programmer.writePage(address, [0x55]);
+    print "wrote 0x55 to address %x" %(address,)
 
   def read(self, filename, address=0, size=1):
-    print "read into %s from %x for %d bytes" % (filename, address, size)
+    #print "read into %s from %x for %d bytes" % (filename, address, size)
+    byte = self.programmer.readBytes(address,size)
+    print "read %s from address %x" % (byte,address)
+

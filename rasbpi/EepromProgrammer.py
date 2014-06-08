@@ -32,7 +32,7 @@ class EepromProgrammer(object):
     self._write_address(0x5555, 0xAA)
     self._write_address(0x2AAA, 0x55)
     self._write_address(0x5555, 0xA0)
-    for i in min(128, range(0, len(bytes))):
+    for i in range(0, min(128,len(bytes))):
       self._write_address(pageAddress+i, bytes[i])
 
   def readBytes(self, startingAddress, size):
@@ -45,13 +45,13 @@ class EepromProgrammer(object):
 
     bytes = []
     for i in range(0,size):
-      bytes.append(self._read_address(startingAddress+i))
+      bytes.extend(self._read_address(startingAddress+i))
     return bytes
 
   def _read_address(self, address):
     self.ADDR = address
     self.syncBits()
-    return readData()
+    return self.readData()
 
   def _write_address(self, address, value):
     self.ADDR = address
