@@ -11,22 +11,24 @@ class EepromProgrammer(object):
     self.io = IOExpander32()
     # port A   -> a0..a7
     # port B   -> a8..a15
-    # port C.7 -> a16
-    # port C.0 -> CE#
-    # port C.1 -> OE#
-    # port C.2 -> WE#
-    # Port D   -> d0..d7
+    # Port C   -> d0..d7
+    # port D.0 -> a16
+    # port D.5 -> WE#
+    # port D.6 -> OE#
+    # port D.7 -> CE#
+
+
 
     # set up address pins and control lines as outputs
     self.io.setPortDirection(IOExpander32.PORT_A, 0)
     self.io.setPortDirection(IOExpander32.PORT_B, 0)
-    self.io.setPortDirection(IOExpander32.PORT_C, 0)
+    self.io.setPortDirection(IOExpander32.PORT_D, 0)
 
   def writePage(self, pageAddress, bytes):
     self.CE = 0
     self.OE = 1
     self.WE = 1
-    self.io.setPortDirection(IOExpander32.PORT_D, 0x0)  # data lines as outputs
+    self.io.setPortDirection(IOExpander32.PORT_C, 0x0)  # data lines as outputs
     self.syncBits()
     self._write_address(0x5555, 0xAA)
     self._write_address(0x2AAA, 0x55)
@@ -39,7 +41,7 @@ class EepromProgrammer(object):
     CE = 0
     OE = 0
     self.ADDR = startingAddress
-    self.io.setPortDirection(IOExpander32.PORT_D, 0xFF)  # data lines as inputs
+    self.io.setPortDirection(IOExpander32.PORT_C, 0xFF)  # data lines as inputs
     self.syncBits()
 
     bytes = []
@@ -69,12 +71,12 @@ class EepromProgrammer(object):
     self.io.writePort(IOExpander32.PORT_A, self.ADDR & 0xFF)
     self.io.writePort(IOExpander32.PORT_B, (self.ADDR & 0xFF00) >> 8)
 
-    cvalue = (self.CE & 1) | (self.OE & 1)<<1 | (self.WE & 1)<<2 | ((self.ADDR & 0x10000)>>16)<<7
-    self.io.writePort(IOExpander32.PORT_C, cvalue)
-
+    dvalue = (self.CE & 1)<<7 | (self.OE & 1)<<6 | (self.WE & 1)<<5 | ((self.ADDR & 0x10000)>>16)
+    self.io.writePort(IOExpander32.PORT_D, dvalue)
+    
   def writeData(self, value):
-    self.io.writePort(IOExpander32.PORT_D, value)    
+    self.io.writePort(IOExpander32.PORT_C, value)    
 
   def readData(self):
-    return self.io.readPort(IOExpander32.PORT_D)
+    return self.io.readPort(IOExpander32.PORT_C)
 
