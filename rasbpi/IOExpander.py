@@ -31,12 +31,12 @@ class IOExpander32(object):
     # bank=0, mirror=0, seqop=0 
 
   def _write_register(self, device, address, bytes):
-    spi.open(*device)
-    spi.xfer2([WRITE_OPCODE, address] + [bytes])
+    self.spi.open(*device)
+    self.spi.xfer2([IOExpander32.WRITE_OPCODE, address] + [bytes])
 
   def _read_register(self, device, address):
-    spi.open(*device)
-    return spi.xfer2([READ_OPCODE, address])
+    self.spi.open(*device)
+    return self.spi.xfer2([IOExpander32.READ_OPCODE, address])
 
 
   def setPortDirection(self, port, value):

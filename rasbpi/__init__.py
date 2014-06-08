@@ -3,8 +3,8 @@ __all__ = ["EepromCommandLine", "EepromProgrammer", "IOExpander32"]
 import sys
 import os
 import rasbpi
-from EepromProgrammer import *
 from IOExpander import *
+from EepromProgrammer import *
 
 class EepromCommandLine(object):
   COMMANDS = ('read', 'write', 'chksum', 'verify')
@@ -12,7 +12,7 @@ class EepromCommandLine(object):
   def __init__(self):
     self.programmer = rasbpi.EepromProgrammer()
 
-  def usage():
+  def usage(self):
     name = os.path.basename(sys.argv[0])
     print("Usage:\n\
     {0} read <outout_filename> [address[:size]]\n\
@@ -26,7 +26,7 @@ class EepromCommandLine(object):
 
     command = sys.argv[1].lower()
 
-    if command not in COMMANDS:
+    if command not in self.COMMANDS:
       return self.usage()
 
     func = getattr(self, command, None)

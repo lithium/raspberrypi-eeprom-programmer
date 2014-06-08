@@ -1,3 +1,4 @@
+from rasbpi import IOExpander32
 
 class EepromProgrammer(object):
 
