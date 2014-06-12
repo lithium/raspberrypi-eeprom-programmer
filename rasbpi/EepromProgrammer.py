@@ -45,7 +45,7 @@ class EepromProgrammer(object):
 
     bytes = []
     for i in range(0,size):
-      bytes.extend(self._read_address(startingAddress+i))
+      bytes.append(self._read_address(startingAddress+i))
     return bytes
 
   def _read_address(self, address):
