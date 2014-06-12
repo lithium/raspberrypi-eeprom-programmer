@@ -74,7 +74,8 @@ class EepromProgrammer(object):
     self.io.writePort(IOExpander32.PORT_D, dvalue)
 
   def writeData(self, value):
-    self.io.writePort(IOExpander32.PORT_C, value)    
+    # since the outputs are open drain, if we want to drive a logic high signal we use the pullup register
+    self.io.setPortPullup(IOExpander32.PORT_C, value)    
 
   def readData(self):
     return self.io.readPort(IOExpander32.PORT_C)
