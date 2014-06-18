@@ -23,7 +23,6 @@ class EepromProgrammer(object):
     self.io.setPortDirection(IOExpander32.PORT_B, 0)
     self.io.setPortDirection(IOExpander32.PORT_D, 0)
 
-
   def writePage(self, pageAddress, bytes):
     self.CE = 0
     self.OE = 1
@@ -79,5 +78,6 @@ class EepromProgrammer(object):
     self.io.setPortPullup(IOExpander32.PORT_C, value)    
 
   def readData(self):
+    self.io.setPortPullup(IOExpander32.PORT_C, 0xFF)
     return self.io.readPort(IOExpander32.PORT_C)
 
