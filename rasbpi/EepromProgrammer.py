@@ -23,6 +23,7 @@ class EepromProgrammer(object):
     self.io.setPortDirection(IOExpander32.PORT_B, 0)
     self.io.setPortDirection(IOExpander32.PORT_D, 0)
 
+
   def writePage(self, pageAddress, bytes):
     self.CE = 0
     self.OE = 1
@@ -55,8 +56,8 @@ class EepromProgrammer(object):
 
   def _write_address(self, address, value):
     self.ADDR = address
-    self.writeData(value)
     self.syncBits()
+    self.writeData(value)
     self.WE_pulse()
 
   def WE_pulse(self):
@@ -67,11 +68,11 @@ class EepromProgrammer(object):
     self.syncBits()
 
   def syncBits(self):
-    self.io.writePort(IOExpander32.PORT_A, self.ADDR & 0xFF)
-    self.io.writePort(IOExpander32.PORT_B, (self.ADDR & 0xFF00) >> 8)
+    self.io.setPortPullup(IOExpander32.PORT_A, self.ADDR & 0xFF)
+    self.io.setPortPullup(IOExpander32.PORT_B, (self.ADDR & 0xFF00) >> 8)
 
     dvalue = (self.CE & 1)<<7 | (self.OE & 1)<<6 | (self.WE & 1)<<5 | ((self.ADDR & 0x10000)>>16)
-    self.io.writePort(IOExpander32.PORT_D, dvalue)
+    self.io.setPortPullup(IOExpander32.PORT_D, dvalue)
 
   def writeData(self, value):
     # since the outputs are open drain, if we want to drive a logic high signal we use the pullup register
